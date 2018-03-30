@@ -3,21 +3,26 @@ var webpack = require('webpack');
 
 module.exports = {
     devtool: 'eval-source-map',
-    entry: path.join(__dirname, '/client/index.js'),
+    entry: [
+        'webpack-hot-middleware/client?reload=true',
+        path.join(__dirname, '/client/index.js')
+    ],
     output: {
         filename: 'bundle.js',
-        path: '/'
+        path: '/',
+        publicPath: '/'
     },
+    plugins: [
+        new webpack.NoEmitOnErrorsPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+    ],
     module: {
         rules: [
             {
                 test: /\.js$/,
                 include: path.join(__dirname, 'client'),
-                loader: 'babel-loader',
+                loaders: 'babel-loader',
                 exclude: /node_modules/,
-                query: {
-                    presets: ['es2015', 'react']
-                }
             }
         ]
     },
