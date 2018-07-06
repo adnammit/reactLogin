@@ -6,12 +6,10 @@ import NavigationBar from './NavigationBar';
 class App extends React.Component {
     render () {
         return (
-            // <div className="container">
-            //     <NavigationBar />
-            // </div>
-            // <Greetings />
-            <div><h1>Hello! Welcome to Mars!</h1>
-            <p>Please enjoy our gravity.</p></div>
+            <div className="container">
+                <NavigationBar />
+                {this.props.children}
+            </div>
         );
     }
 }

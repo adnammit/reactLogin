@@ -1,16 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default () => {
     return (
         <nav className="navbar navbar-default">
             <div className="container-fluid">
                 <div className="navbar-header">
-                    <a className="navbar-brand" href="#">Red Dice</a>
+                    <Link to="/" className="navbar-brand">Mars Lounge</Link>
                 </div>
 
                 <div className="collapse navbar-collapse">
                     <ul className="nav navbar-nav navbar-right">
-                        <li><a href="#">Sign up</a></li>
+                        <li><Link to="/signup">Sign up</Link></li>
                     </ul>
                 </div>
             </div>

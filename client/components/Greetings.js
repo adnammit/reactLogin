@@ -1,7 +1,14 @@
 import React from 'react';
 
-export default () => {
-    return (
-        <div><h1>Hello from react!</h1><p>greetings to the planet Mars</p></div>
-    );
+class Greetings extends React.Component {
+    render() {
+        return (
+            <div className="jumbotron">
+                <h1>Hello! Welcome to Mars.</h1>
+                <p>Please enjoy our gravity free of charge :)</p>
+            </div>
+        );
+    }
 }
+
+export default Greetings;

@@ -1,8 +1,12 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, IndexRoute } from 'react-router-dom';
 import App from './components/App.js';
-import Greetings from './components/Greetings.js'; //swap for app
+import Greetings from './components/Greetings.js';
+import SignupPage from './components/signup/SignupPage.js';
 
 export default (
-    <Route path="/" component={Greetings} />
+    <Route path="/" component={App}>
+        <IndexRoute component={Greetings} />
+        <Route path="signup" component={SignupPage} />
+    </Route>
 )

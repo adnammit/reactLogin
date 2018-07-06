@@ -20,9 +20,17 @@ $ taskkill /F /IM node.exe
 
 ### HELPFUL RESOURCES:
 * [webpack configuration guide](https://webpack.js.org/configuration/)
+* don't forget that you can use the react extension in dev tools to examine the composition and state of your react components
+
 
 
 ## PROJECT NOTES:
+
+#### APPLICATION OVERVIEW:
+* our login application consists of the main app layout component, nav bar, greeting and signup form, the display of which is controlled by routing.
+
+
+
 #### PACKAGE.JSON
 * `scripts: nodemon` watches the server directory for changes and refreshes its execution of `babel-node`
     - `nodemon` is handling the filename `index.js`, not `babel-node`, hence the '--'
@@ -58,9 +66,14 @@ $ taskkill /F /IM node.exe
 
 #### INDEX.JS (CLIENT)
 * here is where we render the components that will go into 'bundle.js'
+* introducing routes:
+    - rather than loading the `App` component, we will use `Router` to show different content based on different conditions (are we logged in or out?)
+    - your router needs `browserHistory`
+    - the routes themselves are saved in a separate file ('routes.js')
+
 
 #### APP.JS
-* __your top component must be a class component rather than a functional component__
+* _your top component must be a class component rather than a functional component_
     ```javascript
     // CLASS COMPONENT:
     class App extends React.Component {
@@ -78,7 +91,28 @@ $ taskkill /F /IM node.exe
         );
     }
     ```
+* because our app uses several different components as 'top' components depending on routing, all of our router components need to be classes (App, Greetings, SignupPage)
+
+
+#### ROUTES.JS
+* your route requires two props:
+    - the path
+    - the component being rendered
+* `IndexRoute` is like a default root route -- "when nothing else is specified, display this"
+
+
+
+#### SIGNUPFORM
+* our form will need state and needs to be a class component
+
+
+
+Quick updates : - with React now you can use the tag ref="username" then you can access the element with this.refs.username so you can just setState onSubmit this.refs.username.value. - with ES6/2015 you are not always forced to bind the context, you can instead use the arrow function so the context of the function is automatically the one where the function is called!
+Ex: onChange={ this.onChange.bind(this) }
+becomes
+onChange={ (ev) => this.onChange(ev) }﻿
 
 
 ## TO DO:
 * `import` statements require extensions -- that's weird. shouldn't webpack be taking care of that?
+* routes don't actually live in the routes file -- make it so
