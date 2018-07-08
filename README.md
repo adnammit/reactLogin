@@ -49,6 +49,18 @@ $ taskkill /F /IM node.exe
     - `NoEmitOnErrorsPlugin`: cleaner errors
 
 
+#### REDUX
+* we will use redux for store management and actions
+* actions
+    - Redux takes care of dispatching actions based on events
+    - our components just call functions with data passed in w/out needing to know what's going on
+* we don't need to store anything in global Redux store for now -- we just need actions
+* `connect` is a high-order component needed to connect redux actions with React components (?)
+    - connect takes two params:
+        * map state to props: provides some piece of data from Store (takes state and returns object)
+        * map page to props: specify your action here (userSignupRequest)
+            - shorcut definition is to create it as an object `{ userSignupRequest }`
+
 #### BABELRC
 * babel does the transpiling of ES6 code
 * babel doesn't understand react by default, so add that in there too
@@ -70,7 +82,15 @@ $ taskkill /F /IM node.exe
     - rather than loading the `App` component, we will use `Router` to show different content based on different conditions (are we logged in or out?)
     - your router needs `browserHistory`
     - the routes themselves are saved in a separate file ('routes.js')
-
+* the `Router` component will be wrapped in `Provider` -- our basic Redux store
+* Redux `store` and `Provider`:
+    - `Provider`
+    - `store` is a more broad Redux construct
+        * initialized with the `createStore` function from Redux which takes several params:
+            - root reducer: a function which takes state and action and returns a new state
+            - second param is optional initial state
+            - third param is applyMiddleware (provided by Redux)
+* `thunk` middleware from Redux allows us to dispatch asynchronous actions
 
 #### APP.JS
 * _your top component must be a class component rather than a functional component_
@@ -103,7 +123,22 @@ $ taskkill /F /IM node.exe
 
 
 #### SIGNUPFORM
+* this handles all the higher-level stuff that is separate from the form itself
 * our form will need state and needs to be a class component
+* onSubmit:
+    - will be defined separately in `actions/`
+    - will be imported by `SignupPage` and passed to `SignupForm` via props
+
+
+#### SIGNUPPAGE
+* the actual form
+* use `lodash/map` function to create a key/value mapping of timezones
+* `onChange` function is intentionally generic so it can be used with any of the fields
+* `SignupPage` is passed in `userSignupRequest` which comes from Redux thunk, but we need to use `connect` to get it
+
+
+#### SIGNUPACTIONS
+* `return dispatch` - our promise
 
 
 
