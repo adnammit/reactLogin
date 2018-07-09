@@ -4,7 +4,7 @@ Based on the web [tutorial series](https://www.youtube.com/playlist?list=PLuNEz8
 
 
 ## START WITH:
-Lesson 4
+Lesson 7
 
 
 #### To Run:
@@ -141,6 +141,10 @@ $ taskkill /F /IM node.exe
 * `return dispatch` - our promise
 
 
+#### SERVER/USERS
+* here is where we will validate our user data and handle errors using `Validator`
+* note that `Validator.isNull()` is deprectated -- use `Validator.isEmpty()` or `lodash.isEmpty()`
+
 
 Quick updates : - with React now you can use the tag ref="username" then you can access the element with this.refs.username so you can just setState onSubmit this.refs.username.value. - with ES6/2015 you are not always forced to bind the context, you can instead use the arrow function so the context of the function is automatically the one where the function is called!
 Ex: onChange={ this.onChange.bind(this) }
@@ -151,3 +155,4 @@ onChange={ (ev) => this.onChange(ev) }﻿
 ## TO DO:
 * `import` statements require extensions -- that's weird. shouldn't webpack be taking care of that?
 * routes don't actually live in the routes file -- make it so
+* reverted axios to an older version (0.12.0) - update for newer axios version
