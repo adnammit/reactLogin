@@ -28,7 +28,9 @@ $ taskkill /F /IM node.exe
 
 #### APPLICATION OVERVIEW:
 * our login application consists of the main app layout component, nav bar, greeting and signup form, the display of which is controlled by routing.
-
+* **validation**:
+    - both client- and server-side
+    - in `SignupForm::onSubmit()` we use the check to `isValid()` which calls our validation func right there on the client side. if we didn't validate there, it would happen when we call `userSignupRequest()` which makes a server call (where validation takes place again)
 
 
 #### PACKAGE.JSON
