@@ -1,31 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch, browserHistory } from 'react-router-dom';
-import routes from './routes.js';
-import App from './components/App.js';
-import Greetings from './components/Greetings.js'; //swap for app
-import SignupPage from './components/signup/SignupPage.js';
+import routes from './routes';
+import App from './components/App';
+import Greetings from './components/Greetings'; //swap for app
+import SignupPage from './components/signup/SignupPage';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
-
-// // ReactDOM.render(<App />, document.getElementById('app'));
-// ReactDOM.render(<Router history={browserHistory} routes={routes} />, document.getElementById('app'));
-
-
-// ReactDOM.render(<Router history={browserHistory} routes={routes} />, document.getElementById('app'));
-//
-//
-// ReactDOM.render(
-//     <Router history={browserHistory} routes={routes} />,
-//     document.getElementById('app')
-// );
-//
-
+import { createStore, applyMiddleware, compose } from 'redux';
+import rootReducer from './rootReducer';
 
 const store = createStore(
-    (state = {}) => state,
-    applyMiddleware(thunk)
+    rootReducer,
+    compose(
+        applyMiddleware(thunk),
+        window.devToolsExtension ? window.devToolsExtension() : f => f
+    )
 );
 
 ReactDOM.render((

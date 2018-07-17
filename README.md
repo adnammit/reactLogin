@@ -4,7 +4,7 @@ Based on the web [tutorial series](https://www.youtube.com/playlist?list=PLuNEz8
 
 
 ## START WITH:
-Lesson 7
+Lesson 11
 
 
 #### To Run:
@@ -20,8 +20,8 @@ $ taskkill /F /IM node.exe
 
 ### HELPFUL RESOURCES:
 * [webpack configuration guide](https://webpack.js.org/configuration/)
-* don't forget that you can use the react extension in dev tools to examine the composition and state of your react components
-
+* don't forget that you can use the react and redux extensions in dev tools to examine the composition and state of your react components
+    - the redux extension will help debug what's going on with reducers and track state changes
 
 
 ## PROJECT NOTES:
@@ -62,6 +62,10 @@ $ taskkill /F /IM node.exe
         * map state to props: provides some piece of data from Store (takes state and returns object)
         * map page to props: specify your action here (userSignupRequest)
             - shorcut definition is to create it as an object `{ userSignupRequest }`
+* **reducers** are simple functions which take state and an action and return a state
+    - keep reducers small and simple
+    - we use the `combineReducers` helper from redux to combine and manage all of our reducers as one state object
+
 
 #### BABELRC
 * babel does the transpiling of ES6 code
@@ -148,6 +152,7 @@ $ taskkill /F /IM node.exe
 * note that `Validator.isNull()` is deprectated -- use `Validator.isEmpty()` or `lodash.isEmpty()`
 
 
+
 Quick updates : - with React now you can use the tag ref="username" then you can access the element with this.refs.username so you can just setState onSubmit this.refs.username.value. - with ES6/2015 you are not always forced to bind the context, you can instead use the arrow function so the context of the function is automatically the one where the function is called!
 Ex: onChange={ this.onChange.bind(this) }
 becomes
@@ -155,6 +160,7 @@ onChange={ (ev) => this.onChange(ev) }﻿
 
 
 ## TO DO:
-* `import` statements require extensions -- that's weird. shouldn't webpack be taking care of that?
 * routes don't actually live in the routes file -- make it so
 * reverted axios to an older version (0.12.0) - update for newer axios version
+* why do some of our import variables go inside brackets and others don't?
+* perhaps deprecated use of contextTypes in SignupForm -- rework
