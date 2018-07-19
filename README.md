@@ -4,7 +4,7 @@ Based on the web [tutorial series](https://www.youtube.com/playlist?list=PLuNEz8
 
 
 ## START WITH:
-Lesson 11
+Lesson 14
 
 
 #### To Run:
@@ -22,23 +22,34 @@ $ taskkill /F /IM node.exe
 * [webpack configuration guide](https://webpack.js.org/configuration/)
 * don't forget that you can use the react and redux extensions in dev tools to examine the composition and state of your react components
     - the redux extension will help debug what's going on with reducers and track state changes
+* need a [refresher on psql](https://www.tutorialspoint.com/postgresql/)?
+
+### VOCAB AND CONCEPTS
+* **bcrypt**: never store passwords on a server, so use bcrypt to encrypt the password
+* **deconstruction**
 
 
-## PROJECT NOTES:
 
-#### APPLICATION OVERVIEW:
+# PROJECT NOTES:
+
+## APPLICATION OVERVIEW:
 * our login application consists of the main app layout component, nav bar, greeting and signup form, the display of which is controlled by routing.
 * **validation**:
     - both client- and server-side
     - in `SignupForm::onSubmit()` we use the check to `isValid()` which calls our validation func right there on the client side. if we didn't validate there, it would happen when we call `userSignupRequest()` which makes a server call (where validation takes place again)
+* **reducers** are simple functions which take state and an action and return a state
+    - keep reducers small and simple
+    - we use the `combineReducers` helper from redux to combine and manage all of our reducers as one state object
 
 
-#### PACKAGE.JSON
+## TOOLS AND SETUP:
+
+### PACKAGE.JSON
 * `scripts: nodemon` watches the server directory for changes and refreshes its execution of `babel-node`
     - `nodemon` is handling the filename `index.js`, not `babel-node`, hence the '--'
     - webpack will take care of the client directory
 
-#### WEBPACK CONFIG
+### WEBPACK CONFIG
 * webpack can take any file (`path: '/'`) because middleware serves from memory (rather than saving a file like 'bundle.js')
 * `devtool: 'eval-source-map'` provides more information while debugging making it easier to track down errors
 * webpack doesn't know anything about js (or other languages) so the `rules` array tells webpack how to handle certain kinds of files
@@ -51,7 +62,7 @@ $ taskkill /F /IM node.exe
     - `NoEmitOnErrorsPlugin`: cleaner errors
 
 
-#### REDUX
+### REDUX
 * we will use redux for store management and actions
 * actions
     - Redux takes care of dispatching actions based on events
@@ -61,12 +72,34 @@ $ taskkill /F /IM node.exe
     - connect takes two params:
         * map state to props: provides some piece of data from Store (takes state and returns object)
         * map page to props: specify your action here (userSignupRequest)
+    - shorcut definition is to create it as an object `{ userSignupRequest }`
     - `FlashMessagesList` is connected because it will need information from the Store
-            - shorcut definition is to create it as an object `{ userSignupRequest }`
-* **reducers** are simple functions which take state and an action and return a state
-    - keep reducers small and simple
-    - we use the `combineReducers` helper from redux to combine and manage all of our reducers as one state object
 
+### POSTGRES, KNEX AND BOOKSHELF
+* `knex` is a SQL query builder with a promise interface. you'll need postgres or MySQL to use it
+* init a db for this project and `npm install --save pg` for the postgres driver
+* install `knex` both locally (`--save`) and globally
+* from your repo's dir, do `knex init` which just creates a config file at root level. modify it by copy/pasting the 'staging' block contents into 'development' since we're using postgres. Change info to your db's settings and leave password as a blank string
+* now you're ready to get going:
+    - `$ knex migrate:make users` - create a migration: generates a 'migrations' folder with a users.js file inside
+    - inside the `migrations/*users.js` file, define your promise functions to create the table schema and drop it
+    - now that your promises are defined, run `$ knex migrate:latest`
+    - run just `$ knex` to view commands
+* we'll use `bookshelf` to save the user into the database. bookshelf works on top of knex
+    - `npm install --save bookshelf`
+    - make `/server/bookshelf.js` and initialize bookshelf
+    - import knex and the knexConfig file
+    - use those imports to initialize bookshelf with knex and the development section from config
+* in `/routes/users.js` where we do our validation, if `isValid` we create our user
+    - we get our User shape from `/server/models/user.js`
+    - deconstruct the request body and generate the encrypted password_digest using `bcrypt`
+    - `User.forge()` creates our user
+        * `hasTimestamps` populates timestamps with current date
+        * `save()` returns a promise, so handle it here
+    save returns a promise, so
+* create `models` by importing not the bookshelf package itself but the initialization of bookshelf (`/server/bookshelf.js`)
+* check that everything worked by going back to psql on the Command Line and running
+    `# select * from users` - you should see your users. success!
 
 #### BABELRC
 * babel does the transpiling of ES6 code
@@ -151,8 +184,9 @@ $ taskkill /F /IM node.exe
 #### SERVER/USERS
 * here is where we will validate our user data and handle errors using `Validator`
 * note that `Validator.isNull()` is deprectated -- use `Validator.isEmpty()` or `lodash.isEmpty()`
-
-
+* if Valid, we create a user -- how?
+    - we import our `bookshelf` definition of a User here
+    - we pass all the props of our user to `User.forge().save()` which returns a promise.
 
 Quick updates : - with React now you can use the tag ref="username" then you can access the element with this.refs.username so you can just setState onSubmit this.refs.username.value. - with ES6/2015 you are not always forced to bind the context, you can instead use the arrow function so the context of the function is automatically the one where the function is called!
 Ex: onChange={ this.onChange.bind(this) }
