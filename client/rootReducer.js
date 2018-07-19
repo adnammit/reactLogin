@@ -3,5 +3,4 @@ import flashMessages from './reducers/flashMessages';
 
 export default combineReducers({
     flashMessages
-
 });

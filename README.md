@@ -61,6 +61,7 @@ $ taskkill /F /IM node.exe
     - connect takes two params:
         * map state to props: provides some piece of data from Store (takes state and returns object)
         * map page to props: specify your action here (userSignupRequest)
+    - `FlashMessagesList` is connected because it will need information from the Store
             - shorcut definition is to create it as an object `{ userSignupRequest }`
 * **reducers** are simple functions which take state and an action and return a state
     - keep reducers small and simple
