@@ -4,7 +4,7 @@ Based on the web [tutorial series](https://www.youtube.com/playlist?list=PLuNEz8
 
 
 ## START WITH:
-Lesson 14
+Lesson 15
 
 
 #### To Run:
@@ -37,6 +37,7 @@ $ taskkill /F /IM node.exe
 * **validation**:
     - both client- and server-side
     - in `SignupForm::onSubmit()` we use the check to `isValid()` which calls our validation func right there on the client side. if we didn't validate there, it would happen when we call `userSignupRequest()` which makes a server call (where validation takes place again)
+    - we also added onBlur validation which can conflict with the client/server validation, so if the onBlur validation fails, disable the Submit button so the client/server validation is inaccessible
 * **reducers** are simple functions which take state and an action and return a state
     - keep reducers small and simple
     - we use the `combineReducers` helper from redux to combine and manage all of our reducers as one state object

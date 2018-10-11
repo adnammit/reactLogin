@@ -43,6 +43,16 @@ function validateInput(data, otherValidations) {
     // });
 }
 
+router.get('/:identifier', (req, res) => {
+    User.query({
+        select: [ 'username', 'email' ], // make sure we're not accessing password
+        where: { email: req.params.identifier },
+        orWhere: { username: req.params.identifier }
+    }).fetch().then(user => {
+        res.json({ user });
+    });
+});
+
 router.post('/', (req, res) => {
     validateInput(req.body, commonValidations).then(({ errors, isValid }) => {
         if(isValid) {
