@@ -1,6 +1,6 @@
 import express from 'express';
 import validateInput from '../shared/validations/signup';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import User from '../models/user';
 
 let router = express.Router();

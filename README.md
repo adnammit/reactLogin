@@ -37,6 +37,7 @@ $ taskkill /F /IM node.exe
 * **validation**:
     - both client- and server-side
     - in `SignupForm::onSubmit()` we use the check to `isValid()` which calls our validation func right there on the client side. if we didn't validate there, it would happen when we call `userSignupRequest()` which makes a server call (where validation takes place again)
+    - we also added onBlur validation which can conflict with the client/server validation, so if the onBlur validation fails, disable the Submit button so the client/server validation is inaccessible
 * **reducers** are simple functions which take state and an action and return a state
     - keep reducers small and simple
     - we use the `combineReducers` helper from redux to combine and manage all of our reducers as one state object
@@ -100,6 +101,8 @@ $ taskkill /F /IM node.exe
 * create `models` by importing not the bookshelf package itself but the initialization of bookshelf (`/server/bookshelf.js`)
 * check that everything worked by going back to psql on the Command Line and running
     `# select * from users` - you should see your users. success!
+* troubleshooting `psql`:
+    - if psql doesn't like who you are, try `psql --username==postgres`
 
 #### BABELRC
 * babel does the transpiling of ES6 code
@@ -199,3 +202,4 @@ onChange={ (ev) => this.onChange(ev) }﻿
 * reverted axios to an older version (0.12.0) - update for newer axios version
 * why do some of our import variables go inside brackets and others don't?
 * perhaps deprecated use of contextTypes in SignupForm -- rework
+* `bcrypt` was giving me supreme guff so I uninstalled it and installed `bcryptjs`
